@@ -1,0 +1,56 @@
+.contentTask {
+
+    display: flex;
+    align-items: start;
+    background: var(--gray-500);
+    padding: 1rem;
+    border-radius: 8px;
+
+}
+
+.contentTask p {
+
+    padding: 0 .75rem;
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--gray-200);
+    line-height: 1.6;
+
+    flex: 1;
+}
+
+.contentTask p.descriptioChecked{
+
+    text-decoration: line-through;
+    
+}
+
+
+.contentTask button {
+
+    background: transparent;
+    line-height: 1;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.contentTask button svg {
+
+    color: var(--gray-300);
+}
+
+input[type=radio] {
+
+    all: unset;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid var(--blue-200);
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: transparent;
+    position: relative;
+
+    transition:  border-color .2s,  background-color .2s ;
+}
+
