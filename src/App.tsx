@@ -4,7 +4,7 @@ import { PlusCircle } from "@phosphor-icons/react"
 import styles from "./App.module.css";
 import { TaskCard } from "./components/TaskCard";
 import { Task } from "./models/Task";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 const dadosTasks: Task[] = [
   {
@@ -39,10 +39,44 @@ const dadosTasks: Task[] = [
 function App() {
 
   const [tasks, setTasks] = useState(dadosTasks)
+  const [descriptionNewTask, setDescriptionNewTask] = useState("")
 
   function taskConcluidas() {
     return tasks.filter(task => task.checked).length
   }
+
+  function addTask(event: FormEvent) {
+
+    event.preventDefault()
+
+    const newTask: Task = {
+      checked: false,
+      description: descriptionNewTask,
+      id: tasks.length + 1,
+    }
+    setTasks(tasks => {
+      return [...tasks, newTask]
+    })
+
+    setDescriptionNewTask(() => "")
+  }
+
+  function handleDescricaoTask(event: FormEvent<HTMLInputElement>) {
+
+
+    const value = event.target.value.trim()
+
+    setDescriptionNewTask(value)
+
+  }
+
+  function deleteTask(id: number) {
+
+    setTasks(tasks => {
+      return tasks.filter(item => item.id !== id)
+    })
+  }
+
 
   function changeCheckedTask(id: number) {
 
@@ -54,7 +88,7 @@ function App() {
         if (task.id === id) {
 
           newTask.checked = !task.checked
-       
+
 
         }
         return newTask
@@ -71,8 +105,8 @@ function App() {
     <div>
       <Header />
 
-      <form className={styles.taskForm}>
-        <input type="text" placeholder="Adicione uma nova tarefa" />
+      <form className={styles.taskForm} onSubmit={addTask}>
+        <input type="text" placeholder="Adicione uma nova tarefa" required value={descriptionNewTask} onChange={handleDescricaoTask} />
         <button type="submit">
           Criar
           <PlusCircle size={24} />
@@ -100,6 +134,7 @@ function App() {
                 checked={task.checked}
                 id={task.id}
                 checkedTaskUpdate={changeCheckedTask}
+                deleteTask={ deleteTask}
               />)
             })
           }
